@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -12,8 +12,6 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 
-import PrivateRoute from "./components/private-route/PrivateRoute";
-import Table from "./components/dashboard/Dashboard";
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -42,9 +40,7 @@ class App extends Component {
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
-          {/* <Switch>
-              <PrivateRoute exact path="/dashboard" component={Table} />
-            </Switch> */}
+          
         </div>
       </Router>
       </Provider>

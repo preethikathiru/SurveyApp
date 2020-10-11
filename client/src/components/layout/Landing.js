@@ -20,6 +20,7 @@ class Landing extends Component {
     if(this.state.data.data != null)
       return (
         <div>
+          <br></br>
           <table id='responses'>
             <tbody>
               <tr>
