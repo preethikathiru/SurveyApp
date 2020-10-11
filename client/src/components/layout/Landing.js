@@ -1,74 +1,64 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import data from "./data"; 
+import "./app.css";
 
 class Landing extends Component {
-  render() {
-    return (
-      <div style={{ height: "75vh" }} className="container valign-wrapper">
-        <div className="row">
-          <div className="col s12 center-align">
-            <br />
-            <div className="col s6">
-              <Link
-                to="/register"
-                style={{
-                  width: "140px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px"
-                }}
-                className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-              >
-                Register
-              </Link>
-            </div>
-            <div className="col s6">
-              <Link
-                to="/login"
-                style={{
-                  width: "140px",
-                  borderRadius: "3px",
-                  letterSpacing: "1.5px"
-                }}
-                className="btn btn-large btn-flat waves-effect white black-text"
-              >
-                Log In
-              </Link>
-            </div>
-          </div>
-        </div>
-        <div>
-                {
-					data.Experiences.map((experience, i) => {
-						return (
-							<div key={i}>
-								<div>
-									<a href={experience.url}>
-										<img src={experience.logo} alt={experience.companyName} />
-									</a>
-									<div>
-										<div>
-											<a href={experience.url}>{experience.companyName}</a>
-										</div>
-											{experience.roles.map(function (role, i) { 
-												return <div key={i}>
-													<h5>{role.title}</h5>
-													<span>{role.startDate}</span>
-													<span>{role.location}</span>
-													<p>{role.description}</p>
-												</div>
-											})}
-									</div>
-								</div>
-							</div>
-						);
-					})
-				} 
-            </div>
-      </div>
+  state = {
+    data: {}
+  }
 
-      
-    );
+  componentDidMount() {
+    fetch('http://localhost:5000/api/forms/get')
+    .then(res => res.json())
+    .then((data) => {
+      console.log(data)
+      this.setState({ data: data })
+    })
+    .catch((err) => console.log(err))
+  }
+
+  render() {
+    if(this.state.data.data != null)
+      return (
+        <div>
+          <table id='responses'>
+            <tbody>
+              <tr>
+                <th key='userName'> User Name </th>
+                {
+                  this.state.data.data[0].totalResponse.map((questions, i) => {
+                    return (
+                      <th key={questions.identifier}>{questions.headline.toUpperCase()}</th>
+                    )
+                  })
+                }
+              </tr>
+              {
+                this.state.data.data.map((response, i) => {
+                  return (
+                  <tr key={response._id}>
+                    <td>{response.submittedByName}</td>
+                    {
+                      response.totalResponse.map((data, j) => {
+                        return (
+                          <td>{(data.answer)? data.answer: "-"}</td>
+                        )
+                      })
+                    }
+                  </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+        </div>
+      );
+    else{
+      return (
+        <div>
+
+        </div>
+      )
+    }
   }
 }
 export default Landing;
