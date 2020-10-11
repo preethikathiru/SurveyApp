@@ -1,29 +1,39 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Navbar, Nav, Button } from 'react-bootstrap'
 
-class Navbar extends Component {
+class XNavbar extends React.Component {
   render() {
     return (
-      <div className="navbar-fixed">
-
-        
-        <nav className="z-depth-0">
-          <div className="nav-wrapper white">
-            
-            <Link
-              to="/"
-              style={{
-                fontFamily: "monospace"
-              }}
-              className="col s5 brand-logo center black-text"
-            >
-              {/* <i className="material-icons">code</i> */}
+      <Navbar inverse fluid style={{background: "blue"}}>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav style={{background: "blue", padding: 10}}>
+            <Nav.Link href="/" style={{
+                fontFamily: "monospace",
+              }} className="col s5 brand-logo center white-text">
               Survey
-            </Link>
-          </div>
-        </nav>
-      </div>
+            </Nav.Link>
+            <Button style={{
+                  width: "120px",
+                  borderRadius: "3px",
+                  letterSpacing: "1.5px",
+                  background: "white",
+                  color: "black",
+                  marginLeft: 10,
+                  float: "right",
+                }} href="/login">Login</Button>
+            <Button class="pull-right" style={{
+                  width: "120px",
+                  borderRadius: "3px",
+                  letterSpacing: "1.5px",
+                  background: "white",
+                  color: "black",
+                  marginLeft: 10,
+                  float: "right",
+                }} href="/register">Register</Button>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
     );
   }
 }
-export default Navbar;
+export default XNavbar;

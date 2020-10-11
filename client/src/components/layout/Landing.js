@@ -1,20 +1,13 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import data from "./data"; 
+
 class Landing extends Component {
   render() {
     return (
       <div style={{ height: "75vh" }} className="container valign-wrapper">
         <div className="row">
           <div className="col s12 center-align">
-            {/* <h4>
-              <b>Build</b> a login/auth app with the{" "}
-              <span style={{ fontFamily: "monospace" }}>MERN</span> stack from
-              scratch
-            </h4> */}
-            {/* <p className="flow-text grey-text text-darken-1">
-              Create a (minimal) full-stack app with user authentication via
-              passport and JWTs
-            </p> */}
             <br />
             <div className="col s6">
               <Link
@@ -44,7 +37,37 @@ class Landing extends Component {
             </div>
           </div>
         </div>
+        <div>
+                {
+					data.Experiences.map((experience, i) => {
+						return (
+							<div key={i}>
+								<div>
+									<a href={experience.url}>
+										<img src={experience.logo} alt={experience.companyName} />
+									</a>
+									<div>
+										<div>
+											<a href={experience.url}>{experience.companyName}</a>
+										</div>
+											{experience.roles.map(function (role, i) { 
+												return <div key={i}>
+													<h5>{role.title}</h5>
+													<span>{role.startDate}</span>
+													<span>{role.location}</span>
+													<p>{role.description}</p>
+												</div>
+											})}
+									</div>
+								</div>
+							</div>
+						);
+					})
+				} 
+            </div>
       </div>
+
+      
     );
   }
 }
