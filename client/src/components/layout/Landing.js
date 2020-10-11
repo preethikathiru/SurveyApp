@@ -5,9 +5,16 @@ class Landing extends Component {
   state = {
     data: {}
   }
+  
 
   componentDidMount() {
-    fetch('http://localhost:5000/api/forms/get')
+    let url = '';
+    if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+      // dev code
+      url = 'http://localhost:5000';
+  } 
+
+    fetch(url + '/api/forms/get')
     .then(res => res.json())
     .then((data) => {
       console.log(data)
