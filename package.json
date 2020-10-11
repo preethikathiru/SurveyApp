@@ -33,5 +33,9 @@
     "@shelf/jest-mongodb": "^1.2.3",
     "jest": "^26.5.2",
     "nodemon": "^2.0.4"
-  }
+  },
+  "engine":{
+    "node": "14.13.0",
+    "npm": "6.14.8"
+    }
 }
