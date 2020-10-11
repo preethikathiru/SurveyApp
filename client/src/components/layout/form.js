@@ -1,40 +1,44 @@
 import React from "react";
+import { RadioGroup, RadioButton } from 'react-radio-buttons';
 import * as data from './data.json';
 
 class XForm extends React.Component {
+    
     render(){
         return (
             <div>
-                <h4>Form - {data.questionnaire.name} </h4>
-                <p> Decsription - {data.questionnaire.description} </p>
+                <h4>Form:  {data.questionnaire.name} </h4>
+                <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+                <p> <b>Decsription - {data.questionnaire.description}</b> </p> 
+                </div>
                 <form>{
                     data.questionnaire.questions.map((question, i) => {
                         if(question.question_type === "text" && question.multiline === "false"){
                             return(
                                 <div>
-                                    <label for={ question.identifier }>{ question.headline }</label>
-                                    <p>{ question.description? question.description : ""}</p>
-                                    <input type="text" id={ question.identifier } name={ question.identifier } placeholder="Type your answer"/>
+                                    <label for={ question.identifier } style={{fontSize:"1rem",color:"blue",fontStyle:"oblique"}}>{ question.headline }</label>
+                                    <p >{ question.description? question.description : ""}</p>
+                                    <input type="text" style={{width:"25rem"}} id={ question.identifier } name={ question.identifier } placeholder="Type your answer"/>
                                 </div>
                             );
                         }else if(question.question_type === "text" && question.multiline === "true"){
-                            return(
+                             return(
                                 <div>
-                                    <label for={ question.identifier }>{ question.headline }</label>
+                                    <label for={ question.identifier } style={{fontSize:"1rem",color:"blue"}}>{ question.headline }</label>
                                     <p>{ question.description? question.description : ""}</p>
-                                    <textarea id={ question.identifier } name={ question.identifier } placeholder="Type your answer"/>
+                                    <textarea style={{width:"25rem", height:"10rem"}} id={ question.identifier } name={ question.identifier } placeholder="Type your answer"/>
                                 </div>
                             );
                         }else if(question.question_type === "multiple-choice" && question.multiple === "false"){
                             return(
-                                <div>
-                                    <label for={ question.identifier }>{ question.headline }</label>
+                                <div >
+                                    <label for={ question.identifier } style={{fontSize:"1rem",color:"blue"}}>{ question.headline }</label>
                                     <p>{ question.description? question.description : ""}</p>
                                     {
                                         question.choices.map((choice, j) => {
                                             return(
-                                            <div>
-                                                <input type="radio" checked={(choice.checked === "true")} value={choice.value}/> {choice.value}
+                                            <div style={{width:"20rem",height:"5rem",textAlign:"center",fontStyle:"oblique",margin:"auto"}} >
+                                                <RadioButton type="radio" checked={(choice.checked === "true")} value={choice.value} > {choice.value}</RadioButton>
                                             </div>
                                             );
                                         })
@@ -44,7 +48,7 @@ class XForm extends React.Component {
                         }else if(question.question_type === "multiple-choice" && question.multiple === "true"){
                             return(
                                 <div>
-                                    <label for={ question.identifier }>{ question.headline }</label>
+                                    <label for={ question.identifier } style={{fontSize:"1rem",color:"blue"}}>{ question.headline }</label>
                                     <p>{ question.description? question.description : ""}</p>
                                     {
                                         question.choices.map((choice, j) => {
