@@ -1,10 +1,17 @@
 import React from "react";
 import { Navbar, Nav, Button } from 'react-bootstrap'
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
 class XNavbar extends React.Component {
+  onLogoutClick = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+  };
   render() {
     return (
-      <Navbar inverse fluid style={{background: "blue"}}>
+      <Navbar style={{background: "blue"}}>
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav style={{background: "blue", padding: 10}}>
             <Nav.Link href="/" style={{
@@ -12,7 +19,7 @@ class XNavbar extends React.Component {
               }} className="col s5 brand-logo center white-text">
               Survey
             </Nav.Link>
-            <Button style={{
+            {(localStorage.jwtToken)? <Button style={{
                   width: "120px",
                   borderRadius: "3px",
                   letterSpacing: "1.5px",
@@ -20,8 +27,27 @@ class XNavbar extends React.Component {
                   color: "black",
                   marginLeft: 10,
                   float: "right",
-                }} href="/login">Login</Button>
-            <Button class="pull-right" style={{
+                }} onClick={this.onLogoutClick} >Logout</Button> : 
+                <Button style={{
+                  width: "120px",
+                  borderRadius: "3px",
+                  letterSpacing: "1.5px",
+                  background: "white",
+                  color: "black",
+                  marginLeft: 10,
+                  float: "right",
+                }} href="/login"> Login </Button> 
+              }
+            {(localStorage.jwtToken)? <Button style={{
+                  width: "120px",
+                  borderRadius: "3px",
+                  letterSpacing: "1.5px",
+                  background: "white",
+                  color: "black",
+                  marginLeft: 10,
+                  float: "right",
+                }} href="/">Submit</Button> : 
+                <Button style={{
                   width: "120px",
                   borderRadius: "3px",
                   letterSpacing: "1.5px",
@@ -30,10 +56,24 @@ class XNavbar extends React.Component {
                   marginLeft: 10,
                   float: "right",
                 }} href="/register">Register</Button>
+            }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
     );
   }
 }
-export default XNavbar;
+
+XNavbar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(XNavbar);
+
+// export default XNavbar;
