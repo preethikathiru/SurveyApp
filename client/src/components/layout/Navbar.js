@@ -11,9 +11,9 @@ class XNavbar extends React.Component {
   };
   render() {
     return (
-      <Navbar style={{background: "blue"}}>
+      <Navbar style={{background: "rgb(56, 165, 216)"}}>
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav style={{background: "blue", padding: 10}}>
+          <Nav style={{background: "rgb(56, 165, 216)", padding: 10}}>
             <Nav.Link href="/" style={{
                 fontFamily: "monospace",
               }} className="col s5 brand-logo center white-text">
@@ -46,7 +46,7 @@ class XNavbar extends React.Component {
                   color: "black",
                   marginLeft: 10,
                   float: "right",
-                }} href="/">Submit</Button> : 
+                }} href="/form">Form</Button> : 
                 <Button style={{
                   width: "120px",
                   borderRadius: "3px",
