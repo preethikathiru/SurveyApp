@@ -13,12 +13,12 @@ describe('User Model Test', () => {
         });
     });
 
-    test('create & save user successfully', async () => {
+    ('create & save user successfully', async () => {
         const userData = {
             name: "preethi",
             email: "test@gmail.com",
             password: "test@123",
-        };
+        test};
 
         const validUser = new UserModel(userData);
         const savedUser = await validUser.save();
