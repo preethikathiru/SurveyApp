@@ -3,6 +3,28 @@ import { RadioGroup, RadioButton } from "react-radio-buttons";
 import * as data from "./data.json";
 
 class XForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { values: [] };
+        this.handleSubmit = this.handleSubmit.bind(this);
+      }
+      //text
+      handleChange(i, event) {
+        let values = [...this.state.values];
+        values[i] = event.target.value;
+        this.setState({ values });
+     }
+     //radio
+     handlevalue(i, event) {
+      let values = [...this.state.values];
+      values[i] = event;
+      this.setState({ values });
+   }
+
+   handleSubmit(event) {
+       alert('submitted values'+this.state.values.join(','));
+       event.preventDefault();
+    }
   render() {
     return (
       <div>
@@ -12,7 +34,7 @@ class XForm extends React.Component {
             <b>Decsription - {data.questionnaire.description}</b>
           </p>
         </div>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           {data.questionnaire.questions.map((question, i) => {
             if (
               question.question_type === "text" &&
@@ -37,6 +59,7 @@ class XForm extends React.Component {
                     id={question.identifier}
                     name={question.identifier}
                     placeholder="Type your answer"
+                    onChange={this.handleChange.bind(this, i)}
                   />
                 </div>
               );
@@ -58,6 +81,7 @@ class XForm extends React.Component {
                     id={question.identifier}
                     name={question.identifier}
                     placeholder="Type your answer"
+                    onChange={this.handleChange.bind(this, i)}
                   />
                 </div>
               );
@@ -74,10 +98,11 @@ class XForm extends React.Component {
                     {question.headline}
                   </label>
                   <p>{question.description ? question.description : ""}</p>
-                  <RadioGroup>
+                  <RadioGroup onChange={this.handlevalue.bind(this, i)} style={{ width: "25rem",margin:"auto" }} >
                     {question.choices.map((choice, j) => {
                       return (
-                        <RadioButton value={choice.value} key={j}>
+                        <RadioButton value={choice.value} key={j} 
+                        style={{ width: "2rem", height: "1rem" }} >
                           {choice.value}
                         </RadioButton>
                       );
@@ -85,36 +110,8 @@ class XForm extends React.Component {
                   </RadioGroup>
                 </div>
               );
-            } else if (
-              question.question_type === "multiple-choice" &&
-              question.multiple === "true"
-            ) {
-              return (
-                <div>
-                  <label
-                    for={question.identifier}
-                    style={{ fontSize: "1rem", color: "blue" }}
-                  >
-                    {question.headline}
-                  </label>
-                  <p>{question.description ? question.description : ""}</p>
-                  {question.choices.map((choice, j) => {
-                    return (
-                      <p key={j}>
-                        <label>
-                          <input
-                            type="checkbox"
-                            id={choice.value + j}
-                            checked={choice.selected ? "checked" : ""}
-                          />
-                          <span>{choice.value}</span>
-                        </label>
-                      </p>
-                    );
-                  })}
-                </div>
-              );
-            }
+            } 
+            //checkbox
           })}
           <div className="col s12" style={{ paddingLeft: "11.250px" }}>
             <button
@@ -127,6 +124,7 @@ class XForm extends React.Component {
               }}
               type="submit"
               className="btn btn-large waves-effect waves-light hoverable blue accent-3"
+              
             >
               SUBMIT
             </button>

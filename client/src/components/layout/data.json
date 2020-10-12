@@ -278,12 +278,12 @@
           "headline": "Möchtest Du im Ausland abgesichert sein?",
           "description": null,
           "required": false,
-          "multiple": "true",
+          "multiple": "false",
           "choices": [
             {
               "label": "Ja, bis zu einem Monat",
               "value": "Ja, bis zu einem Monat",
-              "selected": true
+              "selected": false
             },
             {
               "label": "Ja, mehrere Monate",
