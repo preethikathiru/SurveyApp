@@ -26,7 +26,7 @@ class Landing extends Component {
   render() {
     if(this.state.data.data != null)
       return (
-        <div>
+        <div style={{overflow:"auto"}}>
           <br></br>
           <table id='responses'>
             <tbody>

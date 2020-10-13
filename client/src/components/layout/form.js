@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
 import * as data from "./data.json";
 
@@ -21,9 +22,53 @@ class XForm extends React.Component {
       this.setState({ values });
    }
 
-   handleSubmit(event) {
-       alert('submitted values'+this.state.values.join(','));
-       event.preventDefault();
+   async handleSubmit(event) {
+      event.preventDefault();
+      let responseData = [];
+      await data.questionnaire.questions.map((question, i) => {
+        responseData.push({
+          identifier: question.identifier,
+          headline: question.headline,
+          description: question.description,
+          answer: this.state.values[i]
+        });
+      });
+
+      let finalData = {
+        responses: responseData,
+      };
+      
+      let url = '';
+      if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+        // dev code
+        url = 'http://localhost:5000';
+      } 
+
+      var config = {
+        method: 'post',
+        url: url+'/api/forms/submit',
+        headers: { 
+          'Authorization': localStorage.jwtToken, 
+          'Content-Type': 'application/json'
+        },
+        data : finalData
+      };
+
+      try {
+        await axios(config);
+        alert('You have successfully submitted the response!');
+        this.props.history.push("/");
+      } catch (error) {
+        if(error.response.status === 500){
+          alert('You have already submitted the response!');
+          this.props.history.push("/");
+        }else if(error.response.status === 401){
+          alert('You are not authorized to submitted the response!');
+          this.props.history.push("/");
+        }else{
+          alert('unexpected error occurred retry again!');
+        }
+      }
     }
   render() {
     return (
@@ -136,3 +181,4 @@ class XForm extends React.Component {
 }
 
 export default XForm;
+
